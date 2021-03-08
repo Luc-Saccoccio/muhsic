@@ -91,10 +91,10 @@ parse []     = getContents
 parse fs     = concat `fmap` mapM readFile fs
 
 usage :: IO ()
-usage   = putStrLn "Usage: haskell-music [-vh] [file ..]"
+usage   = putStrLn "Usage: muhsic [-vh] [file ..]"
 
 version :: IO ()
-version = putStrLn "haskell-music 0.1"
+version = putStrLn "muhsic 0.2"
 
 main :: IO ()
 main = getArgs >>= parse >>= play . wave
