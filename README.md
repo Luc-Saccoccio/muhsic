@@ -19,6 +19,19 @@ stack install
 
 There's some examples in `examples/`, try it ;)
 
+## File Format
+
+It's not intuitive nor pratical ! *Please end my suffering*
+
+It's not even good for notes played at the same times but with different durations ! *Please I beg you*
+
+For you my friend, who still want to try to write music with it *It doesn't even sound good*, here's the format :
+```
+# This is a comment
+note | another_note duration
+```
+Note are coded with integer, and the silence is coded with 0.5. Refer to [this paper](https://pages.mtu.edu/~suits/NoteFreqCalcs.html) to understand the integer you have to use. In short, it's the following : the pitch standard (La 440Hz for a frenchie like me, A440 else) is reprensented by a 0. Then, the notation is pretty simple to understand (but hard to use !) : the following notes are given the integer that follows (be aware that it works with half steps), same for previous notes with negative integers.
+
 # What's next ?
 - Implementing multiple notes I guess.
 - Think of a new way of representing partitions.
