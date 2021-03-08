@@ -6,18 +6,18 @@ You need to provide a file containing the notes and durations (see `examples/`) 
 
 Requires `ffplay`
 
+## Installation
+
+Clone the repository then install the package with either stack or cabal (as you want)
+```
+git clone https://github.com/Luc-Saccoccio/muhsic.git
+cd muhsic
+stack install
+```
+
 ## Examples
 
-Either compile the program and run it on examples:
-```shell
-ghc -dynamic Main.hs -o haskell-music
-haskell-music examples/1.txt
-```
-
-Or run it with `runhaskell`:
-```shell
-runhaskell Main.hs examples/1.txt
-```
+There's some examples in `examples/`, try it ;)
 
 # What's next ?
 - Implementing multiple notes I guess.
