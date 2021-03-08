@@ -25,7 +25,7 @@ It's not intuitive nor pratical ! *Please end my suffering*
 
 It's not even good for notes played at the same times but with different durations ! *Please I beg you*
 
-For you my friend, who still want to try to write music with it *It doesn't even sound good*, here's the format :
+For you my friend, who still wants to try to write music with it *It doesn't even sound good*, here's the format :
 ```
 # This is a comment
 note | another_note duration
@@ -37,4 +37,4 @@ Note are coded with integer, and the silence is coded with 0.5. Refer to [this p
 - Think of a new way of representing partitions.
   * Idea 1 : `duration | note duration | note duration`
   	Where first `duration` is the time before adding the waves of the next line.
-  * Idea 1 : Each line represent an absolute time code (0.125 by 0.125 ?). Problem of the continuity of a note. New symbol ?
+  * Idea 2 : Each line represent an absolute time code (0.125 by 0.125 ?). Problem of the continuity of a note. New symbol ?
