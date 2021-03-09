@@ -32,6 +32,13 @@ note | another_note duration
 ```
 Note are coded with integer, and the silence is coded with 0.5. Refer to [this paper](https://pages.mtu.edu/~suits/NoteFreqCalcs.html) to understand the integer you have to use. In short, it's the following : the pitch standard (La 440Hz for a frenchie like me, A440 else) is reprensented by a 0. Then, the notation is pretty simple to understand (but hard to use !) : the following notes are given the integer that follows (be aware that it works with half steps), same for previous notes with negative integers.
 
+## Output format
+
+The output is named `output.bin`, you can read it with `ffplay -f f32le -ar 48000 output.bin`. If you want to export it to another format, you can use `ffmpeg` :
+```
+ffmpeg -ar 48000 -f f32le -i output.bin -ar 48000 -codec copy -f wav out.wav
+```
+
 # What's next ?
 - Implementing multiple notes I guess.
 - Think of a new way of representing partitions.
