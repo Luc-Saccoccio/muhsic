@@ -15,6 +15,11 @@ cd muhsic
 stack install
 ```
 
+You can use haddock to generate the module documentation
+```
+stack haddock
+```
+
 ## Examples
 
 There's some examples in `examples/`, try it ;)
