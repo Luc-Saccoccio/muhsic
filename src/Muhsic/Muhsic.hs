@@ -73,10 +73,10 @@ noComment _ = False
 save :: FilePath -> [Pulse] -> IO ()
 save filePath = B.writeFile filePath . B.toLazyByteString . foldMap B.floatLE
 
-readNotes :: [String] -> ([Semitones], Float)
+readNotes :: [String] -> ([Semitones], Seconds)
 readNotes list = aux list []
-    where aux [x] accu = (accu, read x::Float)
-          aux (x:xs) accu = aux xs ((read x::Float):accu)
+    where aux [x] accu = (accu, read x::Seconds)
+          aux (x:xs) accu = aux xs ((read x::Semitones):accu)
 
 play :: [Pulse] -> IO ()
 play music = do
