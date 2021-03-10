@@ -40,8 +40,16 @@ ffmpeg -ar 48000 -f f32le -i output.bin -ar 48000 -codec copy -f wav out.wav
 ```
 
 # What's next ?
-- Implementing multiple notes I guess.
-- Think of a new way of representing partitions.
-  * Idea 1 : `duration | note duration | note duration`
-  	Where first `duration` is the time before adding the waves of the next line.
-  * Idea 2 : Each line represent an absolute time code (0.125 by 0.125 ?). Problem of the continuity of a note. New symbol ?
+- Rework **entirely** the partition representation :
+	1. Separate each mesure
+	2. In each mesure, separate right hand and left hand
+	3. Still support original system, but also this one
+  This should solve the tempo problems, and help with the transcription of partitions.
+- Rework the option parsing, it's minimalistic, but hard to expand
+- Think of optimization, and make the code more workable
+  * Separate the source into multiple files
+  * Easy to maintain should be the goal
+
+# Credits
+
+Thanks a lot to [tsoding](https://github.com/tsoding/) for the original [haskell-music](https://github.com/tsoding/haskell-music)
