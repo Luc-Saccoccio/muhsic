@@ -50,7 +50,7 @@ ffmpeg -ar 48000 -f f32le -i output.bin -ar 48000 -codec copy -f wav out.wav
 	2. In each mesure, separate right hand and left hand
 	3. Still support original system, but also this one
   This should solve the tempo problems, and help with the transcription of partitions.
-- Rework the option parsing, it's minimalistic, but hard to expand
+- Rework the option parsing, it's minimalistic, but hard to expand. Using [optparse-applicative](https://github.com/pcapriotti/optparse-applicative) ?
 - Think of optimization, and make the code more workable
   * Separate the source into multiple files
   * Easy to maintain should be the goal
