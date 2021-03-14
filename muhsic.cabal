@@ -1,8 +1,8 @@
-name:           haskell-music
+name:           muhsic
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/temp#readme>
-homepage:       https://github.com/githubuser/haskell-music#readme
-bug-reports:    https://github.com/githubuser/haskell-music/issues
+description:    Please see the README on GitHub at <https://github.com/Luc-Saccoccio/muhsic#README.md>
+homepage:       https://github.com/Luc-Saccoccio/muhsic#readme
+bug-reports:    https://github.com/Luc-Saccoccio/muhsic/issues
 author:         Luc Saccoccio--Le Guennec
 maintainer:     lucsaccoccio@disroot.org
 copyright:      2021 Luc Saccoccio--Le Guennec
@@ -16,7 +16,7 @@ cabal-version: >= 1.10
 
 source-repository head
   type: git
-  location: https://github.com/Luc-Saccoccio/haskell-music
+  location: https://github.com/Luc-Saccoccio/muhsic
 
 library
   exposed: False
