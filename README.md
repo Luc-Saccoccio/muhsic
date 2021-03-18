@@ -54,4 +54,5 @@ ffmpeg -ar 48000 -f f32le -i output.bin -ar 48000 -codec copy -f wav out.wav
 # Credits
 
 Thanks a lot to [tsoding](https://github.com/tsoding/) for the original [haskell-music](https://github.com/tsoding/haskell-music)
+
 Thanks to [Lyric Wulf](https://www.youtube.com/channel/UCOvUbpPE2ev8pXcmadB6ryw) for some of the partitions I used as examples (and also for transcribing those pieces)
