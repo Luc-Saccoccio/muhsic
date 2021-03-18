@@ -24,7 +24,7 @@ stack haddock
 
 There's some examples in `examples/`, try it ;)
 
-## File Format
+## File Format (To rewrite)
 
 It's not intuitive nor pratical ! *Please end my suffering*
 
@@ -45,13 +45,8 @@ ffmpeg -ar 48000 -f f32le -i output.bin -ar 48000 -codec copy -f wav out.wav
 ```
 
 # What's next ?
-- Rework **entirely** the partition representation :
-	1. Separate each mesure
-	2. In each mesure, separate right hand and left hand
-	3. But implement note continuity between mesure (still pressing a note between two mesures)
-
-  This should solve the tempo problems, and help with the transcription of partitions.
 - Rework the option parsing, it's minimalistic, but hard to expand. Using [optparse-applicative](https://github.com/pcapriotti/optparse-applicative) ?
+- Rework entirely the ADSR part
 - Think of optimization, and make the code more workable
   * Separate the source into multiple files
   * Easy to maintain should be the goal
@@ -59,3 +54,4 @@ ffmpeg -ar 48000 -f f32le -i output.bin -ar 48000 -codec copy -f wav out.wav
 # Credits
 
 Thanks a lot to [tsoding](https://github.com/tsoding/) for the original [haskell-music](https://github.com/tsoding/haskell-music)
+Thanks to [Lyric Wulf](https://www.youtube.com/channel/UCOvUbpPE2ev8pXcmadB6ryw) for some of the partitions I used as examples (and also for transcribing those pieces)

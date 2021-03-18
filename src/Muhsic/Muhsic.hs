@@ -2,6 +2,7 @@ module Muhsic where
 
 import qualified Data.ByteString.Builder as B
 import qualified Data.ByteString.Lazy    as B
+import           Data.List.Split         (wordsBy)
 import           System.Environment
 import           System.Exit
 import           System.Process
@@ -54,13 +55,6 @@ f n   = pitchStandard * (2 ** (1.0 / 12.0)) ** n
 
 {- | Takes a tuple with the notes and the duration, return
     the Pulse list (wave for this group of note)
-    DEPRECATED : Usable, not used in the program
--}
-note :: (Semitones, Beats) -> [Pulse]
-note (n, beats) = freq (f n) (beats * beatDuration)
-
-{- | Takes a tuple with the notes and the duration, return
-    the Pulse list (wave for this group of note)
 -}
 notes :: ([Semitones], Beats) -> [Pulse]
 notes (ns, beats) = foldl1 sumFreq $ map (\n -> freq (f n) (beats * beatDuration)) ns
@@ -69,6 +63,8 @@ notes (ns, beats) = foldl1 sumFreq $ map (\n -> freq (f n) (beats * beatDuration
 -- Assume the list have the same length
 sumFreq :: [Pulse] -> [Pulse] -> [Pulse]
 sumFreq [] []         = []
+sumFreq xs []         = xs
+sumFreq [] ys         = ys
 sumFreq (x:xs) (y:ys) = (x+y):sumFreq xs ys
 
 -- | Takes a frequency and a duration, and returns the wave (with the attack/release)
@@ -89,12 +85,33 @@ freq hz duration =
 
 -- | Take the file, returns the final wave
 wave :: String -> [Pulse]
-wave = concatMap (notes . readNotes . filter (/= "|") . words) . filter noComment . filter (/= "") . lines
+wave = concatMap mesure . wordsBy (=="===") . filter goodLine . lines
+    where
+        noComment :: String -> Bool
+        noComment (c:_) = c /= '#'
+        noComment _     = False
 
--- | Used to avoid comments
-noComment :: String -> Bool
-noComment (c:_) = c /= '#'
-noComment _     = False
+        goodLine :: String -> Bool
+        goodLine str = str /= "" && noComment str
+
+-- | Process a "hand"
+hand :: [String] -> [Pulse]
+hand = concatMap (notes . readNotes . filter (/= "|") . words)
+
+-- | Process a mesure
+mesure :: [String] -> [Pulse]
+mesure = noteSum . map hand . wordsBy (=="---")
+
+-- | Sum the notes of a mesure
+noteSum :: [[Pulse]] -> [Pulse]
+noteSum [] = [0]
+noteSum (x:xs) = noteSum' x $ noteSum xs
+    where
+        noteSum' :: Num a => [a] -> [a] -> [a]
+        noteSum' [] []         = []
+        noteSum' a []          = a
+        noteSum' [] b          = b
+        noteSum' (a:as) (b:bs) = (a+b):noteSum' as bs
 
 -- | Save the wave to a binary file
 save :: FilePath -> [Pulse] -> IO ()
