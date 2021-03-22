@@ -1,0 +1,105 @@
+\documentclass[convert]{standalone}
+\usepackage{xparse}
+\usepackage{tikz}
+\usepackage{musixtex}
+\ExplSyntaxOn
+\NewExpandableDocumentCommand \myFrequencyCalculation { m }
+  { \fp_to_decimal:n { round(2**((#1-49)/12)*440,3) } }
+\ExplSyntaxOff
+\begin{document}
+\pgfdeclarelayer{blacknotes}
+\pgfsetlayers{main,blacknotes}
+\tikzset{tight fit/.style={inner sep=0pt, outer sep=0pt}}
+
+\begin{tikzpicture}
+\def\lastnotenodename{clefs}
+\node [text width=1cm, tight fit] (clefs) at (0,0) {
+    \begin{music}
+        \instrumentnumber{1}
+        \instrumentnumber{2}
+        \nostartrule
+        \setstaffs1{1}
+        \setstaffs2{1}
+        \setclef1{\bass}
+        \setclef2{\treble}
+        \startextract
+        \hskip2.0\elemskip
+        \zendextract
+    \end{music}
+};
+
+\foreach \note [
+    evaluate={
+        \n=int(mod(\note-1, 12));
+	\realnote=int(\note-49);
+        \octave=int((\note+8)/12);
+        \t=int(floor((\note-1)/12)*7-7);
+        \notename={"A","","B","C","","D","","E","F","","G",""}[\n];
+        \tonicsolfa={"la","","si","do","","ré","","mi","fa","","sol",""}[\n];
+        \blacknote={0,1,0,0,1,0,1,0,0,1,0,1}[\n];
+        \frequency={\myFrequencyCalculation{\note}};}
+] in {1,...,88}{
+
+    \ifnum\octave>3
+        \tikzset{extract anchor/.style={anchor=south west, at=(\lastnotenodename.south east)}}
+    \else
+        \tikzset{extract anchor/.style={anchor=north west, at=(\lastnotenodename.north east)}}
+    \fi
+    \ifnum\blacknote=0
+        \edef\notenodename{\notename_\octave}
+        \node (\notenodename) [tight fit,text width=1cm, extract anchor/.try]  {%           
+            \begin{music}
+                \instrumentnumber{1}
+                \instrumentnumber{2}
+                \nostartrule        
+                \setstaffs1{1}
+                \setstaffs2{1}  
+                \setclefsymbol1{\empty}
+                \setclefsymbol2{\empty}     
+                \setclef1{\bass}
+                \setclef2{\treble}                      
+                \startextract
+                \transpose\t
+                \hskip-1.5\elemskip         
+                \ifnum\octave>3
+                    \ifnum\octave>4
+                        \Notes \nextinstrument \ql{\notename} \en       
+                    \else
+                        \Notes \nextinstrument \qu{\notename} \en                       
+                    \fi
+                \else
+                    \ifnum\octave>2
+                        \Notes \ql{\notename} \en
+                    \else
+                        \Notes \qu{\notename} \en
+                    \fi
+                \fi
+                \zendextract
+            \end{music}
+        };
+        \xdef\lastnotenodename{\notenodename}       
+        \node [anchor=base] (sol-fa)  at (\notenodename |- 0,-3) {\tonicsolfa$_\octave$};
+
+        \draw (\notenodename.south west |- 0,-4) rectangle ++(1, -4);
+        \node [rotate=90, font=\footnotesize, anchor=east] 
+            at (\notenodename.north |- 0,-4) {\frequency};
+        \node [font=\footnotesize, anchor=south]  
+            at (\notenodename.south |- 0,-8) {\realnote};
+        \node [font=\footnotesize, anchor=south] 
+            at (\notenodename.south |- 0,-8.5)  {\notename$_\octave$};
+        \draw (\notenodename.south west |- sol-fa.south) 
+            rectangle (\notenodename.south east |- 0,1.125); %0.125 by trial and error
+    \else
+        \begin{pgfonlayer}{blacknotes}
+        \fill ([xshift=-0.25cm]\lastnotenodename.north east |- 0,-4) rectangle ++(0.5, -2.5);
+	\node [text=white, font=\footnotesize, anchor=south]  
+            at (\lastnotenodename.south east |- 0,-6.5) {\realnote};
+        \node  [rotate=90, text=white, font=\footnotesize, anchor=east]
+            at (\lastnotenodename.north east |- 0,-4) {\frequency};
+        \end{pgfonlayer}
+    \fi
+}
+\node [rotate=90] at (0,-6) {Fr\`equency (Hz)};
+\end{tikzpicture}
+
+\end{document}

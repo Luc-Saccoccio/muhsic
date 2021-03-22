@@ -15,11 +15,6 @@ cd muhsic
 stack install
 ```
 
-You can use haddock to generate the module documentation
-```
-stack haddock
-```
-
 ## Examples
 
 There's some examples in `examples/`, try it ;)
@@ -45,12 +40,12 @@ ffmpeg -ar 48000 -f f32le -i output.bin -ar 48000 -codec copy -f wav out.wav
 ```
 
 # What's next ?
-- Rework the option parsing, it's minimalistic, but hard to expand. Using [optparse-applicative](https://github.com/pcapriotti/optparse-applicative) ?
-- Rework entirely the ADSR part
-- Think of optimization, and make the code more workable
-  * Separate the source into multiple files
-  * Easy to maintain should be the goal
+- Rework entirely the ADSR part.
+- Implement new types of shynthetization.
+- Finish the writting of the man page.
+- Adding more "examples", finish megalovania.
 
 # Credits
 
-Thanks a lot to [tsoding](https://github.com/tsoding/) for the original [haskell-music](https://github.com/tsoding/haskell-music)
+- Thanks a lot to [tsoding](https://github.com/tsoding/) for the original [haskell-music](https://github.com/tsoding/haskell-music).
+- Thanks to [this thread](https://tex.stackexchange.com/a/448153) on StackOverflow for providing the code used to produce the partition diagram.
