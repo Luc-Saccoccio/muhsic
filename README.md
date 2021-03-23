@@ -1,4 +1,4 @@
-# Haskell-music
+# Muhsic
 
 Using the base from [tsoding's program](https://github.com/tsoding/haskell-music), I used this very interesting base to exercise myself on Haskell.
 
@@ -6,6 +6,17 @@ You need to provide a file containing the notes and durations (see `examples/`) 
 
 Requires `ffplay`. All Haskell dependencies are managed by Stack.
 
+## Table of contents
+
+* [Installation](#Installation)
+* [Examples](#examples)
+* [File Format](#file-format)
+* [Output Format](#output-format)
+* [Arguments](#arguments)
+* [What's next ?](#next)
+* [Credits](#credits)
+
+<a name="installation"></a>
 
 ## Installation
 
@@ -16,9 +27,13 @@ cd muhsic
 stack install
 ```
 
+<a name="examples"></a>
+
 ## Examples
 
 There's some examples in `examples/`, with the partition so you can compare.
+
+<a name="file-format"></a>
 
 ## File Format (To rewrite)
 
@@ -46,12 +61,16 @@ c | b 0.5
 
 We can then write another mesure after, because we separated both blocks by `===`.
 
+<a name="output-format"></a>
+
 ## Output format
 
 The output is by default named `output.bin`, you can read it with `ffplay -f f32le -ar 48000 output.bin`. If you want to export it to another format, you can use `ffmpeg` :
 ```
 ffmpeg -ar 48000 -f f32le -i output.bin -ar 48000 -codec copy -f wav out.wav
 ```
+
+<a name="arguments"></a>
 
 ## Arguments
 
@@ -62,11 +81,15 @@ Here are the optional arguments:
 - `-v`/`--volume`: Specify output volume. Default 0.2.
 - `-o/--output`: Specify output name. I recommend using `.bin` extension. Not conversion will be done inside the program, use `ffmpeg` for that. Default `output.bin`
 
+<a name="next"></a>
+
 # What's next ?
 - Rework entirely the ADSR part.
 - Implement new types of synthetization.
 - Finish the writing of the man page.
 - Adding more "examples", finish Megalovania.
+
+<a name="credits"></a>
 
 # Credits
 
