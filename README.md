@@ -4,7 +4,8 @@ Using the base from [tsoding's program](https://github.com/tsoding/haskell-music
 
 You need to provide a file containing the notes and durations (see `examples/`) as an argument.
 
-Requires `ffplay`
+Requires `ffplay`. All Haskell dependencies are managed by Stack.
+
 
 ## Installation
 
@@ -17,33 +18,55 @@ stack install
 
 ## Examples
 
-There's some examples in `examples/`, try it ;)
+There's some examples in `examples/`, with the partition so you can compare.
 
 ## File Format (To rewrite)
 
-It's not intuitive nor pratical ! *Please end my suffering*
+The file is structured by mesure and then by hand. You can add as many hand as you want, and have different durations. In fact, it's better to avoid adding an empty hand or not complete one by silence. However, all the hand start at the same time. If it starts by silence and then have notes, play the silence. A "hand" is located in a "mesure".
 
-It's not even good for notes played at the same times but with different durations ! *Please I beg you*
+- `===` is the separation between two mesures. You don't need to end or start a file with this.
+- `---` is the separation between two hands. You don't need to end or start a hand with this.
+- `|` is the separation between two notes.
+- After the list of notes (must be on the same line), the duration follows.
+- A new line means that the line will be played **after** the previous line.
 
-For you my friend, who still wants to try to write music with it *It doesn't even sound good*, here's the format :
+The notes are represented by integer, counting from La3/A4. Refer to `doc/piano_range.pdf` for a diagram. A silence is represented by `0.5`.
+
+Here is the result, where `a`, `b`, `c` and `d` represent notes. Let's say we want to play `a+c` for 0.5, then `b+c` for 1, and, at the same time, play `a+d+c` for 0.25, a silence for 0.5 and finish by `c+b` for 0.5 (0.25 is missing, this is not a problem).
+
 ```
-# This is a comment
-note | another_note duration
+a | c 0.5
+b | c 1
+---
+a | d | c 0.25
+0.5 0.5
+c | b 0.5
+===
 ```
-Note are coded with integer, and the silence is coded with 0.5. Refer to [this paper](https://pages.mtu.edu/~suits/NoteFreqCalcs.html) to understand the integer you have to use. In short, it's the following : the pitch standard (La 440Hz for a frenchie like me, A440 else) is reprensented by a 0. Then, the notation is pretty simple to understand (but hard to use !) : the following notes are given the integer that follows (be aware that it works with half steps), same for previous notes with negative integers.
+
+We can then write another mesure after, because we separated both blocks by `===`.
 
 ## Output format
 
-The output is named `output.bin`, you can read it with `ffplay -f f32le -ar 48000 output.bin`. If you want to export it to another format, you can use `ffmpeg` :
+The output is by default named `output.bin`, you can read it with `ffplay -f f32le -ar 48000 output.bin`. If you want to export it to another format, you can use `ffmpeg` :
 ```
 ffmpeg -ar 48000 -f f32le -i output.bin -ar 48000 -codec copy -f wav out.wav
 ```
 
+## Arguments
+
+On argument is necessary : `-i`/`--input` to give the input file.
+
+Here are the optional arguments:
+- `-b`/`--bpm`: Specify beats per minute i.e. the duration of a black note. Default 120.
+- `-v`/`--volume`: Specify output volume. Default 0.2.
+- `-o/--output`: Specify output name. I recommend using `.bin` extension. Not conversion will be done inside the program, use `ffmpeg` for that. Default `output.bin`
+
 # What's next ?
 - Rework entirely the ADSR part.
-- Implement new types of shynthetization.
-- Finish the writting of the man page.
-- Adding more "examples", finish megalovania.
+- Implement new types of synthetization.
+- Finish the writing of the man page.
+- Adding more "examples", finish Megalovania.
 
 # Credits
 
