@@ -20,6 +20,9 @@ play outputFilePath music = do
   return ()
 
 parseArguments :: Options -> IO ()
+-- parseArguments (Options _ _ _ _ True) = do
+--     putStrLn versionNumber
+--     return ()
 parseArguments (Options bpm volume outFile file) = do
     fileContent <- readFile file
     play outFile . wave volume beatDuration $ fileContent

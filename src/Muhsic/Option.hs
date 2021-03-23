@@ -1,4 +1,7 @@
-module Muhsic.Option (Options(..), arguments) where
+module Muhsic.Option
+    (Options(..)
+    , arguments)
+    where
 
 import           Data.Semigroup      ((<>))
 import           Options.Applicative
@@ -8,6 +11,9 @@ data Options = Options
     , optVol  :: Float
     , optOut :: FilePath
     , optIn :: FilePath}
+
+versionNumber :: String
+versionNumber = "v0.1.0.1"
 
 bpm :: Parser Float
 bpm = option auto
@@ -21,7 +27,7 @@ bpm = option auto
 volume :: Parser Float
 volume = option auto
   (  long "volume"
-  <> short 'v'
+  <> short 'V'
   <> metavar "VOLUME"
   <> help "Specify base volume"
   <> showDefault
@@ -44,11 +50,17 @@ inputFile = strOption
   <> help "Input file"
   )
 
+version :: Parser (a -> a)
+version = infoOption versionNumber
+  (  long "version"
+  <> short 'v'
+  <> help "Show program version")
+
 options :: Parser Options
 options = Options <$> bpm <*> volume <*> filePath <*> inputFile
 
 opts :: ParserInfo Options
-opts = info (options <**> helper)
+opts = info (helper <*> version <*> options)
     ( fullDesc
     <> progDesc "Takes a file and play the corresponding music"
     <> header "muhsic - make muhsic with Hakell" )
