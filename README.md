@@ -77,8 +77,10 @@ ffmpeg -ar 48000 -f f32le -i output.bin -ar 48000 -codec copy -f wav out.wav
 On argument is necessary : `-i`/`--input` to give the input file.
 
 Here are the optional arguments:
+- `-h`/`--help`: Show help.
+- `-v`/`--version`: Show version.
 - `-b`/`--bpm`: Specify beats per minute i.e. the duration of a black note. Default 120.
-- `-v`/`--volume`: Specify output volume. Default 0.2.
+- `-V`/`--volume`: Specify output volume. Default 0.2.
 - `-o/--output`: Specify output name. I recommend using `.bin` extension. Not conversion will be done inside the program, use `ffmpeg` for that. Default `output.bin`
 
 <a name="next"></a>
