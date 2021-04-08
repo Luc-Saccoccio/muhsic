@@ -10,7 +10,7 @@ license:        MIT
 license-file:   LICENSE
 build-type:     Simple
 data-files:
-    doc/muhsic.1
+    man/muhsic.1
 extra-source-files:
     README.md
 

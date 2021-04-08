@@ -7,13 +7,21 @@ import           Data.Semigroup      ((<>))
 import           Options.Applicative
 
 data Options = Options
-    { optBpm  :: Float
+    { optContent :: Bool
+    , optBpm  :: Float
     , optVol  :: Float
     , optOut :: FilePath
     , optIn :: FilePath}
 
 versionNumber :: String
 versionNumber = "v0.1.0.1"
+
+content :: Parser Bool
+content = switch
+  (  long "content"
+  <> short 'c'
+  <> help "Display information about the file"
+  )
 
 bpm :: Parser Float
 bpm = option auto
@@ -57,7 +65,7 @@ version = infoOption versionNumber
   <> help "Show program version")
 
 options :: Parser Options
-options = Options <$> bpm <*> volume <*> filePath <*> inputFile
+options = Options <$> content <*> bpm <*> volume <*> filePath <*> inputFile
 
 opts :: ParserInfo Options
 opts = info (helper <*> version <*> options)

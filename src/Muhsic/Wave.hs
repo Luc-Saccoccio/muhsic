@@ -5,7 +5,6 @@ module Muhsic.Wave
     , wave
     ) where
 
-import           Data.List.Split         (wordsBy)
 
 -- | Pulse
 type Pulse = Float
@@ -79,12 +78,12 @@ mkFreq volume hz duration =
     output = map (sin .(* step)) [0.0 .. sampleRate * duration]
 
 -- | Take the file, returns the final wave
-wave :: Float -> Float -> String -> [Pulse]
-wave volume beatDuration = concatMap mesure . wordsBy (=="===") . filter goodLine . lines
+wave :: Float -> Float -> [[[String]]] -> [Pulse]
+wave volume beatDuration = concatMap mesure
     where
         -- | Process a mesure
-        mesure :: [String] -> [Pulse]
-        mesure = noteSum . map hand . wordsBy (=="---")
+        mesure :: [[String]] -> [Pulse]
+        mesure = noteSum . map hand
 
         -- | Process a "hand"
         hand :: [String] -> [Pulse]
@@ -99,10 +98,4 @@ wave volume beatDuration = concatMap mesure . wordsBy (=="===") . filter goodLin
         freq :: Hz -> Seconds -> [Pulse]
         freq = mkFreq volume
 
-        noComment :: String -> Bool
-        noComment (c:_) = c /= '#'
-        noComment _     = False
-
-        goodLine :: String -> Bool
-        goodLine str = str /= "" && noComment str
 
