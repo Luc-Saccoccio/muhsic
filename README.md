@@ -1,3 +1,7 @@
+# WARNING
+
+This project is dead. I don't plan to work on it anymore, or at least for a while.
+
 # Muhsic
 
 Using the base from [tsoding's program](https://github.com/tsoding/haskell-music), I used this very interesting base to exercise myself on Haskell.
